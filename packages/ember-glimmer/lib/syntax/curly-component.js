@@ -188,7 +188,6 @@ class CurlyComponentManager {
     aliasIdToElementId(args, props);
 
     props.parentView = parentView;
-    props.renderer = parentView.renderer;
     props[HAS_BLOCK] = hasBlock;
 
     // dynamicScope here is inherited from the parent dynamicScope,
@@ -202,7 +201,9 @@ class CurlyComponentManager {
     dynamicScope.view = component;
     dynamicScope.targetObject = component;
 
-    parentView.appendChild(component);
+    if (parentView !== null) {
+      parentView.appendChild(component);
+    }
 
     component.trigger('didInitAttrs', { attrs });
     component.trigger('didReceiveAttrs', { newAttrs: attrs });
